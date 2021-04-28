@@ -26,7 +26,7 @@ Data = None
 Labels = None
 DATA_list = []
 LABEL_list = []
-path_out = './Result/experiment1/'
+path_out = '../Result/experiment1/'
 for name_ in name_list:
     # デスクトップのパス
     path_in = './dataset/{}/'.format(str(name_))
@@ -87,7 +87,7 @@ optimizer = optim.SGD(net.parameters(), lr=0.01)
 criterion = nn.CrossEntropyLoss().to(device)
 
 total_batch = len(train_loader)
-num_epochs = 10
+num_epochs = 800
 
 train_loss_list = []
 val_loss_list = []
@@ -110,9 +110,9 @@ for epoch in range(num_epochs):
         pred = torch.argmax(out, 1) == labels
         train_acc += pred.detach().cpu().sum()
 
-        if (i+1) % 100 == 0:
+        if (i+1) % total_batch == 0:
             writer.add_scalar('training loss',
-                              train_loss/100,
+                              train_loss/total_batch,
                               epoch*len(train_loader)+i)
             writer.close()
             with torch.no_grad():
@@ -129,17 +129,17 @@ for epoch in range(num_epochs):
                     val_acc += val_pred.detach().cpu().sum()
 
             print("epoch: {}/{}, step: {}/{}, train loss: {:.4f}, val loss: {:.4f}, train acc: {:.2f}, val acc: {:.2f}"
-                  .format(epoch+1, num_epochs, i+1, total_batch, train_loss/100, val_loss /
-                          len(val_loader), train_acc/100/50, val_acc/len(val_loader.dataset)
+                  .format(epoch+1, num_epochs, i+1, total_batch, train_loss/total_batch, val_loss /
+                          len(val_loader), train_acc/total_batch/50, val_acc/len(val_loader.dataset)
                           ))
 
-            train_loss_list.append(train_loss/100)
+            train_loss_list.append(train_loss/total_batch)
             val_loss_list.append(val_loss/len(val_loader))
-            train_acc_list.append(train_acc/100/50)
+            train_acc_list.append(train_acc/total_batch/50)
             val_acc_list.append(val_acc/len(val_loader.dataset))
             train_loss = 0.0
             train_acc = 0.0
-print(train_acc_list, train_loss_list)
+# print(train_acc_list, train_loss_list)
 plt.figure(figsize=(16, 9))
 x_range = list(range(len(train_loss_list)))
 plt.plot(x_range, train_loss_list, label="train")
