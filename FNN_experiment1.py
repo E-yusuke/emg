@@ -14,11 +14,10 @@ import csv
 import sys
 sys.path.append('D:\\NAGATA\\hand_recognition')
 
-name = ["nagata", "noda", "shiba", "kirikihira", "asae2"]  # "fukumitu","izumine"
-name_action = ["nagata_action", "noda_action", "shiba_action", "kirikihira_action", "asae_action"]
+name = []  # Add dir name this list 
+name_action = [] # Add dir name this list 
 name_list = name + name_action
-name_list = ["choppy", "hasegawa", "kaito", "manzen",
-             "nagaoka", "nagata", "noda", "otsuka", "tanabe", "tsutsumi"]
+
 data_labels = {0: "Relax", 1: "Hold", 2: "Open",
                3: "Palmar Flexion", 4: "Dorsal Flexion", 5: "Ulnar Flexion"}
 
