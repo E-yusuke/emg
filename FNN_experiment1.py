@@ -12,7 +12,7 @@ import numpy as np
 import os
 import csv
 import sys
-sys.path.append('D:\\NAGATA\\hand_recognition')
+
 
 name = []  # Add dir name this list 
 name_action = [] # Add dir name this list 
